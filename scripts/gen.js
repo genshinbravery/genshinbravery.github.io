@@ -239,23 +239,23 @@ function getWeapons(key){
   switch(weapon_dict[key]) {
     case(1): //sword
       randomItem = Math.floor(1+Math.random()*(swordArray.length - 1));
-      return swordArray[randomItem % swordArray.length];
-      // return [swordArray[randomItem % swordArray.length], swordArray[(randomItem + 1) % swordArray.length]];
+      // return swordArray[randomItem % swordArray.length];
+      return [swordArray[randomItem % swordArray.length], swordArray[(randomItem + 1) % swordArray.length]];
     case(2): //polearm
       randomItem = Math.floor(1+Math.random()*(polearmArray.length - 1));
-      return polearmArray[randomItem % polearmArray.length];
-      // return [polearmArray[randomItem % polearmArray.length], polearmArray[(randomItem + 1) % polearmArray.length]];
+      // return polearmArray[randomItem % polearmArray.length];
+      return [polearmArray[randomItem % polearmArray.length], polearmArray[(randomItem + 1) % polearmArray.length]];
     case(3): //claymore
       randomItem = Math.floor(1+Math.random()*(claymoreArray.length - 1));
-      return claymoreArray[randomItem % claymoreArray.length];
+      // return claymoreArray[randomItem % claymoreArray.length];
       return [claymoreArray[randomItem % claymoreArray.length], claymoreArray[(randomItem + 1) % claymoreArray.length]];
     case(4): //bow
       randomItem = Math.floor(1+Math.random()*(bowArray.length - 1));
-      return bowArray[randomItem % bowArray.length];
+      // return bowArray[randomItem % bowArray.length];
       return [bowArray[randomItem % bowArray.length], bowArray[(randomItem + 1) % bowArray.length]];
     case(5): //catalyst
       randomItem = Math.floor(1+Math.random()*(catalystArray.length - 1));
-      return catalystArray[randomItem % catalystArray.length];
+      // return catalystArray[randomItem % catalystArray.length];
       return [catalystArray[randomItem % catalystArray.length], catalystArray[(randomItem + 1) % catalystArray.length]];
   }
   return;
@@ -263,11 +263,13 @@ function getWeapons(key){
 
 
 function submit(){
+
+  document.getElementById("setup").innerHTML = "team setup, weapons & artifacts";
   // alert("hi");
   // var array = []
   var checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
   if (checkboxes.length < 4) {
-    alert("not enough characters");
+    alert("not enough characters! please select at least 4");
     return;
   }
   var selected = new Array();
@@ -282,19 +284,24 @@ function submit(){
 
   // document.getElementById("characterge").innerHTML = String(selected[0]) + ", " + String(selected[1]) + ", " + String(selected[2]) + ", " + String(selected[4])
 
-  document.getElementById("characterge").innerHTML = "characters possible: " + selected
+  // document.getElementById("characterge").innerHTML = "characters possible: " + selected;
 
-  document.getElementById("char1").innerHTML = selected[0]
-  document.getElementById("char2").innerHTML = selected[1]
-  document.getElementById("char3").innerHTML = selected[2]
-  document.getElementById("char4").innerHTML = selected[3]
+  document.getElementById("char1").innerHTML = selected[0];
+  document.getElementById("char2").innerHTML = selected[1];
+  document.getElementById("char3").innerHTML = selected[2];
+  document.getElementById("char4").innerHTML = selected[3];
 
   generate();
+
+  var weapon1 = getWeapons(selected[0]);
+  var weapon2 = getWeapons(selected[1]);
+  var weapon3 = getWeapons(selected[2]);
+  var weapon4 = getWeapons(selected[3]);
   
-  document.getElementById("weapon1").innerHTML = "weapon: ".concat(getWeapons(selected[0]).bold()).concat(", backup: ").concat(getWeapons(selected[0]));
-  document.getElementById("weapon2").innerHTML = "weapon: ".concat(getWeapons(selected[1]).bold()).concat(", backup: ").concat(getWeapons(selected[1]));
-  document.getElementById("weapon3").innerHTML = "weapon: ".concat(getWeapons(selected[2]).bold()).concat(", backup: ").concat(getWeapons(selected[2]));
-  document.getElementById("weapon4").innerHTML = "weapon: ".concat(getWeapons(selected[3]).bold()).concat(", backup: ").concat(getWeapons(selected[3]));
+  document.getElementById("weapon1").innerHTML = "weapon: ".concat(weapon1[0].bold()).concat(", backup: ").concat(weapon1[1]);
+  document.getElementById("weapon2").innerHTML = "weapon: ".concat(weapon2[0].bold()).concat(", backup: ").concat(weapon2[1]);
+  document.getElementById("weapon3").innerHTML = "weapon: ".concat(weapon3[0].bold()).concat(", backup: ").concat(weapon3[1]);
+  document.getElementById("weapon4").innerHTML = "weapon: ".concat(weapon4[0].bold()).concat(", backup: ").concat(weapon4[1]);
 
 }
 

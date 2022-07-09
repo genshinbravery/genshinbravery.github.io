@@ -303,8 +303,9 @@
     margin-top: 0;
     margin-bottom: 0;
     padding-left: 2em;
+    list-style: none;
   }
-  
+
   .markdown-body ol ol,
   .markdown-body ul ol {
     list-style-type: lower-roman;
@@ -941,3 +942,4 @@
   .markdown-body ::-webkit-calendar-picker-indicator {
     filter: invert(50%);
   }
+
