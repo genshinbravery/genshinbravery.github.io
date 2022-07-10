@@ -226,6 +226,7 @@ var weapon_dict = {
   Xinyan : 3,
   YaeMiko : 5,
   Yanfei : 5,
+  Yelan : 4,
   Yoimiya : 4,
   YunJin : 2
 };
@@ -309,7 +310,7 @@ function submit(){
   var selected = new Array();
 
   for (var i = 0; i < checkboxes.length; i++) {
-    if (checkboxes[i].checked) {
+    if (checkboxes[i].checked && checkboxes[i]) {
         selected.push(checkboxes[i].value);
     }
   }
