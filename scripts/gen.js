@@ -185,7 +185,7 @@ var weapon_dict = {
   Ayato : 1,
   Barbara : 5,
   Beidou : 3,
-  Bennet : 1,
+  Bennett : 1,
   Childe : 4,
   Chongyun : 3,
   Diluc : 3,
@@ -202,12 +202,13 @@ var weapon_dict = {
   Keqing : 1,
   Klee : 5,
   Kokomi : 5,
+  KukiShinobu : 1,
   Lisa : 5,
   Mona : 5,
   Ningguang : 5,
   Noelle : 3,
   Qiqi : 1,
-  Raiden : 1,
+  Raiden : 2,
   Razor : 3,
   Rosaria : 2,
   Sara : 4,
@@ -226,7 +227,7 @@ var weapon_dict = {
   YaeMiko : 5,
   Yanfei : 5,
   Yoimiya : 4,
-  YunJun : 2
+  YunJin : 2
 };
 
 swordArray = ['Amenoma Kageuchi', 'Aquila Favonia', 'Blackcliff Longsword', 'Cinnabar Spindle', 'Cool Steel', 'Dark Iron Sword', 'Dull Blade', 'Favonius Sword', 'Festering Desire', 'Fillet Blade', 'Freedom-Sworn', 'Haran Geppaku Futsu', 'Harbinger of Dawn', 'Iron Sting', "Lion's Roar", 'Mistsplitter Reforged', 'Primordial Jade Cutter', 'Prototype Rancour', 'Royal Longsword', 'Sacrificial Sword', 'Silver Sword', 'Skyrider Sword', 'Skyward Blade', 'Summit Shaper', 'Sword of Descension', 'The Alley Flash', 'The Black Sword', 'The Flute', 'Traveler\'s Handy Sword'];
@@ -235,36 +236,68 @@ claymoreArray = ['Akuoumaru', 'Blackcliff Slasher', 'Bloodtainted Greatsword', '
 bowArray = ['Alley Hunter', "Amos' Bow", 'Aqua Simulacra', 'Blackcliff Warbow', 'Compound Bow', 'Ebony Bow', 'Elegy for the End', 'Fading Twilight', 'Favonius Warbow', 'Hamayumi', "Hunter's Bow", 'Messenger', 'Mitternachts Waltz', "Mouun's Moon", 'Polar Star', 'Predator', 'Prototype Crescent', 'Raven Bow', 'Recurve Bow', 'Royal Bow', 'Rust', 'Sacrificial Bow', "Seasoned Hunter's Bow", "Sharpshooter's Oath", 'Skyward Harp', 'Slingshot', 'The Stringless', 'The Viridescent Hunt', 'Thundering Pulse', 'Windblume Ode'];
 catalystArray = ['Amber Catalyst', "Apprentice's Notes", 'Blackcliff Agate', 'Dodoco Tales', 'Emerald Orb', 'Everlasting Moonglow', 'Eye of Perception', 'Favonius Codex', 'Frostbearer', 'Hakushin Ring', "Kagura's Verity", 'Lost Prayer to the Sacred Winds', 'Magic Guide', 'Mappa Mare', 'Memory of Dust', 'Oathsworn Eye', 'Otherworldly Story', 'Pocket Grimoire', 'Prototype Amber', 'Royal Grimoire'];
 
+var weapon_temp = ["", "", "", "", ""];
+
 function getWeapons(key){
+  weapon_temp = ["", "", "", "", ""];
+  // alert(String(key).concat(String(weapon_dict[key]))) //testing weapons works
+
   switch(weapon_dict[key]) {
     case(1): //sword
-      randomItem = Math.floor(1+Math.random()*(swordArray.length - 1));
+      swordArray = shuffle(swordArray);
       // return swordArray[randomItem % swordArray.length];
-      return [swordArray[randomItem % swordArray.length], swordArray[(randomItem + 1) % swordArray.length]];
+      for (i = 0; i < 5; i++) {
+        weapon_temp[i] = swordArray[i];
+      }
+      break;
+
     case(2): //polearm
-      randomItem = Math.floor(1+Math.random()*(polearmArray.length - 1));
+      polearmArray = shuffle(polearmArray);
       // return polearmArray[randomItem % polearmArray.length];
-      return [polearmArray[randomItem % polearmArray.length], polearmArray[(randomItem + 1) % polearmArray.length]];
+      for (i = 0; i < 5; i++) {
+        weapon_temp[i] = polearmArray[i];
+      }
+      break;
+
     case(3): //claymore
-      randomItem = Math.floor(1+Math.random()*(claymoreArray.length - 1));
+      claymoreArray = shuffle(claymoreArray);
       // return claymoreArray[randomItem % claymoreArray.length];
-      return [claymoreArray[randomItem % claymoreArray.length], claymoreArray[(randomItem + 1) % claymoreArray.length]];
+      for (i = 0; i < 5; i++) {
+        weapon_temp[i] = claymoreArray[i];
+      }
+      break;
+
     case(4): //bow
-      randomItem = Math.floor(1+Math.random()*(bowArray.length - 1));
+      bowArray = shuffle(bowArray);
       // return bowArray[randomItem % bowArray.length];
-      return [bowArray[randomItem % bowArray.length], bowArray[(randomItem + 1) % bowArray.length]];
+      for (i = 0; i < 5; i++) {
+        weapon_temp[i] = bowArray[i];
+      }
+      break;
+
     case(5): //catalyst
-      randomItem = Math.floor(1+Math.random()*(catalystArray.length - 1));
+      catalystArray = shuffle(catalystArray);
       // return catalystArray[randomItem % catalystArray.length];
-      return [catalystArray[randomItem % catalystArray.length], catalystArray[(randomItem + 1) % catalystArray.length]];
+      for (i = 0; i < 5; i++) {
+        weapon_temp[i] = catalystArray[i]
+      }
+      break;
+
+
+    default:
+      alert("error in weapon selection")
+      break;
   }
-  return;
+  return weapon_temp;
 }
 
+var traveler_count = [0, 0, 0, 0];
+var counter = 0;
+var selected_id = 4;
 
 function submit(){
 
-  document.getElementById("setup").innerHTML = "team setup, weapons & artifacts";
+  
   // alert("hi");
   // var array = []
   var checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
@@ -272,6 +305,7 @@ function submit(){
     alert("not enough characters! please select at least 4");
     return;
   }
+
   var selected = new Array();
 
   for (var i = 0; i < checkboxes.length; i++) {
@@ -280,16 +314,60 @@ function submit(){
     }
   }
 
+  counter = 0;
+
+  for(i = 0; i < selected.length; i++) {
+    if (selected[i] == "TravelerAnemo" || selected[i] == "TravelerElectro" || selected[i] == "TravelerGeo") {
+      counter++;
+    }
+  }
+
+  if (selected.length - counter < 3) {
+    alert("not enough non-traveler characters! please select at least 3 non-travelers");
+    return;
+  }
+
+  document.getElementById("setup").innerHTML = "team setup, weapons & artifacts";
+
+
   selected = shuffle(selected);
 
   // document.getElementById("characterge").innerHTML = String(selected[0]) + ", " + String(selected[1]) + ", " + String(selected[2]) + ", " + String(selected[4])
 
   // document.getElementById("characterge").innerHTML = "characters possible: " + selected;
 
+  
+
+  // alert("travlercheckgin");
+  traveler_count = [0, 0, 0, 0];
+  counter = 0;
+  selected_id = 4;
+
+  for (i = 0; i < 4; i++) {
+    if (selected[i] == "TravelerAnemo" || selected[i] == "TravelerElectro" || selected[i] == "TravelerGeo") {
+      if (counter > 0) {
+        for (j = selected_id; j < selected.length; j++) {
+          if (selected[j] == "TravelerAnemo" || selected[j] == "TravelerElectro" || selected[j] == "TravelerGeo") {
+            continue;
+          }
+          else {
+            selected[i] = selected[j];
+            selected_id = j + 1;
+          }
+        }
+      }
+      traveler_count[i]++;
+      counter++;
+    }
+  }
+
+  // alert("doneee");
+
   document.getElementById("char1").innerHTML = selected[0];
   document.getElementById("char2").innerHTML = selected[1];
   document.getElementById("char3").innerHTML = selected[2];
   document.getElementById("char4").innerHTML = selected[3];
+
 
   generate();
 
@@ -298,10 +376,10 @@ function submit(){
   var weapon3 = getWeapons(selected[2]);
   var weapon4 = getWeapons(selected[3]);
   
-  document.getElementById("weapon1").innerHTML = "weapon: ".concat(weapon1[0].bold()).concat(", backup: ").concat(weapon1[1]);
-  document.getElementById("weapon2").innerHTML = "weapon: ".concat(weapon2[0].bold()).concat(", backup: ").concat(weapon2[1]);
-  document.getElementById("weapon3").innerHTML = "weapon: ".concat(weapon3[0].bold()).concat(", backup: ").concat(weapon3[1]);
-  document.getElementById("weapon4").innerHTML = "weapon: ".concat(weapon4[0].bold()).concat(", backup: ").concat(weapon4[1]);
+  document.getElementById("weapon1").innerHTML = "weapon: ".concat(weapon1[0].bold()).concat(", backup: ").concat(weapon1[1]).concat(", ").concat(weapon1[2]).concat(", ").concat(weapon1[3]).concat(", ").concat(weapon1[4]);
+  document.getElementById("weapon2").innerHTML = "weapon: ".concat(weapon2[0].bold()).concat(", backup: ").concat(weapon2[1]).concat(", ").concat(weapon2[2]).concat(", ").concat(weapon2[3]).concat(", ").concat(weapon2[4]);
+  document.getElementById("weapon3").innerHTML = "weapon: ".concat(weapon3[0].bold()).concat(", backup: ").concat(weapon3[1]).concat(", ").concat(weapon3[2]).concat(", ").concat(weapon3[3]).concat(", ").concat(weapon3[4]);
+  document.getElementById("weapon4").innerHTML = "weapon: ".concat(weapon4[0].bold()).concat(", backup: ").concat(weapon4[1]).concat(", ").concat(weapon4[2]).concat(", ").concat(weapon4[3]).concat(", ").concat(weapon4[4]);
 
 }
 
