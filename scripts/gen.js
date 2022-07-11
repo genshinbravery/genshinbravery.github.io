@@ -292,11 +292,19 @@ function getWeapons(key){
   return weapon_temp;
 }
 
+function set_chara_img(selected) {
+  document.getElementById("char1img").src="images/character_icons/Character_".concat(selected[0]).concat("_Thumb.png");
+  document.getElementById("char2img").src="images/character_icons/Character_".concat(String(selected[1])).concat("_Thumb.png");
+  document.getElementById("char3img").src="images/character_icons/Character_".concat(String(selected[2])).concat("_Thumb.png");
+  document.getElementById("char4img").src="images/character_icons/Character_".concat(String(selected[3])).concat("_Thumb.png");
+}
+
 var traveler_count = [0, 0, 0, 0];
 var counter = 0;
 var selected_id = 4;
 
-function submit(){
+
+function submit() {
 
   
   // alert("hi");
@@ -368,6 +376,8 @@ function submit(){
   document.getElementById("char2").innerHTML = selected[1];
   document.getElementById("char3").innerHTML = selected[2];
   document.getElementById("char4").innerHTML = selected[3];
+
+  set_chara_img(selected);
 
 
   generate();
